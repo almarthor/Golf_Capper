@@ -17,11 +17,11 @@ namespace Golf_Capper.Controllers
 
 
         [HttpGet]
-        public ActionResult <List<Course>> GetAllCoursesAsync()
+        public async Task<ActionResult <List<Course>>> GetAllCoursesAsync()
         {
             try
             {
-                List<Course> courses =  _repository.GetAllCoursesAsync();
+                List<Course> courses =  await _repository.GetAllCoursesAsync();
 
                 return Ok(courses);
             }
@@ -36,11 +36,11 @@ namespace Golf_Capper.Controllers
 
        [HttpGet]
         [Route("{id}")]
-        public ActionResult<Course> GetCourseById(int id)
+        public async Task<ActionResult<Course>> GetCourseById(int id)
         {
             try
             {
-                Course? c = _repository.GetCourseById(id);
+                Course? c = await _repository.GetCourseById(id);
                 if(c == null)
                 {
                     return NotFound();
@@ -49,7 +49,7 @@ namespace Golf_Capper.Controllers
                 {
                     return Ok(c);
                 }
-                //asdfasdf
+                
             }
             catch (Exception)
             {
@@ -63,13 +63,13 @@ namespace Golf_Capper.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateCourse([FromBody] Course course)
+        public async Task<IActionResult> CreateCourse([FromBody] Course course)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _repository.CreateCourse(course);
+                    await _repository.CreateCourseAsync(course);
 
                     return CreatedAtAction(nameof(GetCourseById), new { id = course.CourseId }, course);
 
@@ -91,11 +91,11 @@ namespace Golf_Capper.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult UpdateCourse(int id, [FromBody] Course course)
+        public async Task<IActionResult> UpdateCourse(int id, [FromBody] Course course)
         {
             try
             {
-                Course upDateCourse = _repository.UpdateCourse(id, course);
+                Course upDateCourse = await _repository.UpdateCourse(id, course);
                 if (upDateCourse == null)
                 {
                     return NotFound();
@@ -115,11 +115,11 @@ namespace Golf_Capper.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public ActionResult<Course> DeleteCourse(int id)
+        public async Task<ActionResult<Course>> DeleteCourse(int id)
         {
             try
             {
-                bool deleteSuccesfull = _repository.DeleteCourse(id);
+                bool deleteSuccesfull = await _repository.DeleteCourse(id);
                 if (!deleteSuccesfull)
                 {
                     return NotFound();

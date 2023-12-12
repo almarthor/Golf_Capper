@@ -42,10 +42,19 @@ namespace Golf_Capper.Controllers
 
             try
             {
-
+                
                 Score score = _repository.GetScoreById(id);
+                if (score == null)
+                {
+                    return NotFound();
 
+                }
+                else
+                {
                 return Ok(score);
+                }
+
+
             }
             catch (Exception)
             {

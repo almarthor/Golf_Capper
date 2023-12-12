@@ -28,7 +28,7 @@ namespace Golf_Capper.Controllers
                 return StatusCode(500);
 
             }
-            
+
         }
 
 
@@ -39,14 +39,22 @@ namespace Golf_Capper.Controllers
             try
             {
                 Location location = _repository.GetLocationById(id);
-                return Ok(location);
+                if (location == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(location);
+                }
+
             }
             catch (Exception)
             {
                 return StatusCode(500);
 
             }
-            
+
         }
 
 
@@ -70,11 +78,11 @@ namespace Golf_Capper.Controllers
                 return StatusCode(500);
 
             }
-            
+
         }
 
 
-        
+
 
 
         [HttpPut]
@@ -98,7 +106,7 @@ namespace Golf_Capper.Controllers
                 return StatusCode(500);
 
             }
-            
+
         }
 
 
@@ -123,7 +131,7 @@ namespace Golf_Capper.Controllers
                 return StatusCode(500);
 
             }
-            
+
 
         }
 

@@ -38,8 +38,16 @@ namespace Golf_Capper.Controllers
         {
             try
             {
-                Golfer golfer = _repository.GetGolferById(id);
-                return Ok(golfer);
+                Golfer? golfer = _repository.GetGolferById(id);
+                if(golfer == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(golfer);
+                }
+                
             }
             catch (Exception)
             {

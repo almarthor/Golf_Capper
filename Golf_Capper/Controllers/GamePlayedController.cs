@@ -43,8 +43,16 @@ namespace Golf_Capper.Controllers
         {
             try
             {
-                GamePlayed gamePlayed = _repository.GetGamePlayedById(id);
-                return Ok(gamePlayed);
+                GamePlayed? gamePlayed = _repository.GetGamePlayedById(id);
+                if(gamePlayed == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(gamePlayed);
+                }
+                
             }
             catch (Exception)
             {

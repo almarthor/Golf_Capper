@@ -34,99 +34,107 @@ namespace Golf_Capper.Controllers
 
         }
 
-        
-                [HttpGet]
-                [Route("{id}")]
-                public ActionResult<CourseHolePar> GetCourseHoleParById(int id)
+
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<CourseHolePar> GetCourseHoleParById(int id)
+        {
+            try
+            {
+                CourseHolePar? courseHolePar = _repository.GetCourseHoleParById(id);
+                if(courseHolePar != null)
                 {
-                    try
-                    {
-                CourseHolePar courseHolePar = _repository.GetCourseHoleParById(id);
-                        return Ok(courseHolePar);
-                    }
-                    catch (Exception)
-                    {
-                        return StatusCode(500);
-
-                    }
-
+                    return NotFound();
                 }
-
-
-                [HttpPost]
-                public IActionResult CreateCourseHolePar([FromBody] CourseHolePar courseHolePar)
+                else
                 {
-                    try
-                    {
-                        if (ModelState.IsValid)
-                        {
-                            _repository.CreateCourseHolePar(courseHolePar);
-                            return CreatedAtAction(nameof(GetCourseHoleParById), new { id = courseHolePar.CourseHoleParId }, courseHolePar);
-                        }
-                        else
-                        {
-                            return BadRequest();
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        return StatusCode(500);
-                    }
-
-
+                    return Ok(courseHolePar);
                 }
+                
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+
+            }
+
+        }
 
 
-                [HttpPut]
-                [Route("{id}")]
-                public IActionResult UpdateCourseHolePar(int id, [FromBody] CourseHolePar courseHolePar)
+        [HttpPost]
+        public IActionResult CreateCourseHolePar([FromBody] CourseHolePar courseHolePar)
+        {
+            try
+            {
+                if (ModelState.IsValid)
                 {
-                    try
-                    {
-                        CourseHolePar upDateCourseHolePar = _repository.UpdateCourseHolePar(id, courseHolePar);
-                        if (upDateCourseHolePar == null)
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            return CreatedAtAction(nameof(upDateCourseHolePar), new { id = courseHolePar.CourseHoleParId }, courseHolePar);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        return StatusCode(500);
-
-                    }
-
+                    _repository.CreateCourseHolePar(courseHolePar);
+                    return CreatedAtAction(nameof(GetCourseHoleParById), new { id = courseHolePar.CourseHoleParId }, courseHolePar);
                 }
-
-
-                [HttpDelete]
-                [Route("{id}")]
-                public ActionResult<CourseHolePar> DeleteCourseHolePar(int id)
+                else
                 {
-                    try
-                    {
-                        bool deleteSuccesfull = _repository.DeleteCourseHolePar(id);
-                        if (!deleteSuccesfull)
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            return NoContent();
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        return StatusCode(500);
-
-                    }
-
-
+                    return BadRequest();
                 }
-        
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+
+
+        }
+
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult UpdateCourseHolePar(int id, [FromBody] CourseHolePar courseHolePar)
+        {
+            try
+            {
+                CourseHolePar upDateCourseHolePar = _repository.UpdateCourseHolePar(id, courseHolePar);
+                if (upDateCourseHolePar == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return CreatedAtAction(nameof(upDateCourseHolePar), new { id = courseHolePar.CourseHoleParId }, courseHolePar);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+
+            }
+
+        }
+
+
+        [HttpDelete]
+        [Route("{id}")]
+        public ActionResult<CourseHolePar> DeleteCourseHolePar(int id)
+        {
+            try
+            {
+                bool deleteSuccesfull = _repository.DeleteCourseHolePar(id);
+                if (!deleteSuccesfull)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return NoContent();
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+
+            }
+
+
+        }
+
     }
 
 
