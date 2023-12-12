@@ -24,12 +24,12 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public void CreateCourseHolePar (CourseHolePar courseHolePar)
+        public async Task CreateCourseHoleParAsync (CourseHolePar courseHolePar)
         {
             using(var db = _dbcontext)
             {
-                 db.CourseHolePars.Add(courseHolePar);
-                 db.SaveChanges();
+                 await db.CourseHolePars.AddAsync(courseHolePar);
+                 await db.SaveChangesAsync();
             }
         }
 
@@ -70,7 +70,7 @@ namespace Golf_Capper.Data.Repository
         }
 
         //Delete
-        public async Task<bool> DeleteCourse(int id)
+        public async Task<bool> DeleteCourseAsync(int id)
         {
             Course courseToDelete;
             using(var db = _dbcontext)
@@ -90,12 +90,12 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public bool DeleteCourseHolePar(int id)
+        public async Task<bool> DeleteCourseHoleParAsync(int id)
         {
             CourseHolePar courseHoleParToDelete;
             using (var db = _dbcontext)
             {
-                courseHoleParToDelete = db.CourseHolePars.FirstOrDefault(h => h.CourseHoleParId == id);
+                courseHoleParToDelete = await db.CourseHolePars.FirstOrDefaultAsync(h => h.CourseHoleParId == id);
 
                 if (courseHoleParToDelete == null)
                 {
@@ -104,7 +104,7 @@ namespace Golf_Capper.Data.Repository
                 else
                 {
                     db.CourseHolePars.Remove(courseHoleParToDelete);
-                    db.SaveChanges(true);
+                    await db.SaveChangesAsync(true);
                     return true;
                 }
             }
@@ -192,11 +192,11 @@ namespace Golf_Capper.Data.Repository
 
 
         //GetAll
-        public List<CourseHolePar> GetAllCourseHoleParsAsync()
+        public async Task<List<CourseHolePar>> GetAllCourseHoleParsAsync()
         {
             using (var db = _dbcontext)
             {
-                return db.CourseHolePars.ToList();
+                return await db.CourseHolePars.ToListAsync();
             }
         }
 
@@ -245,7 +245,7 @@ namespace Golf_Capper.Data.Repository
 
         //GetById
 
-        public async Task<Course?> GetCourseById(int id)
+        public async Task<Course?> GetCourseByIdAsync(int id)
         {
             Course? c;
             using (var db = _dbcontext)
@@ -257,11 +257,12 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public CourseHolePar? GetCourseHoleParById(int id)
+        public async Task<CourseHolePar?> GetCourseHoleParByIdAsync(int id)
         {
-            using(var db = _dbcontext)
+            CourseHolePar? c;
+            using (var db = _dbcontext)
             {
-                CourseHolePar? c = db.CourseHolePars.Include(z => z.Course).FirstOrDefault(x => x.CourseHoleParId == id);
+                c = await db.CourseHolePars.Include(z => z.Course).FirstOrDefaultAsync(x => x.CourseHoleParId == id);
                 return c;
             }
         }
@@ -310,7 +311,7 @@ namespace Golf_Capper.Data.Repository
 
         //Update
 
-        public async Task<Course> UpdateCourse(int id, Course course)
+        public async Task<Course> UpdateCourseAsync(int id, Course course)
         {
             Course CourseToUpdate;
             using(var db = _dbcontext)
@@ -333,19 +334,19 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public CourseHolePar UpdateCourseHolePar(int id, CourseHolePar courseHolePar)
+        public async Task<CourseHolePar> UpdateCourseHoleParAsync(int id, CourseHolePar courseHolePar)
         {
             CourseHolePar CourseHoleParToUpdate;
             using(var db = _dbcontext)
             {
-                CourseHoleParToUpdate = db.CourseHolePars.FirstOrDefault(x => x.CourseHoleParId == id);
+                CourseHoleParToUpdate = await db.CourseHolePars.FirstOrDefaultAsync(x => x.CourseHoleParId == id);
                 if(CourseHoleParToUpdate == null)
                 {
                     return null;
                 }
                 CourseHoleParToUpdate.HoleNumber = courseHolePar.HoleNumber;
                 CourseHoleParToUpdate.Par = courseHolePar.Par;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return CourseHoleParToUpdate;
 
             }

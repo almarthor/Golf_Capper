@@ -18,11 +18,11 @@ namespace Golf_Capper.Controllers
 
 
         [HttpGet]
-        public ActionResult<List<CourseHolePar>> GetAllCourseHoleParsAsync()
+        public async Task<ActionResult<List<CourseHolePar>>> GetAllCourseHoleParsAsync()
         {
             try
             {
-                List<CourseHolePar> courses = _repository.GetAllCourseHoleParsAsync();
+                List<CourseHolePar> courses = await _repository.GetAllCourseHoleParsAsync();
 
                 return Ok(courses);
             }
@@ -37,11 +37,11 @@ namespace Golf_Capper.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public ActionResult<CourseHolePar> GetCourseHoleParById(int id)
+        public async Task<ActionResult<CourseHolePar>> GetCourseHoleParByIdAsync(int id)
         {
             try
             {
-                CourseHolePar? courseHolePar = _repository.GetCourseHoleParById(id);
+                CourseHolePar? courseHolePar = await _repository.GetCourseHoleParByIdAsync(id);
                 if(courseHolePar != null)
                 {
                     return NotFound();
@@ -62,14 +62,14 @@ namespace Golf_Capper.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateCourseHolePar([FromBody] CourseHolePar courseHolePar)
+        public async Task<IActionResult> CreateCourseHoleParAsync([FromBody] CourseHolePar courseHolePar)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _repository.CreateCourseHolePar(courseHolePar);
-                    return CreatedAtAction(nameof(GetCourseHoleParById), new { id = courseHolePar.CourseHoleParId }, courseHolePar);
+                    await _repository.CreateCourseHoleParAsync(courseHolePar);
+                    return CreatedAtAction(nameof(GetCourseHoleParByIdAsync), new { id = courseHolePar.CourseHoleParId }, courseHolePar);
                 }
                 else
                 {
@@ -87,11 +87,11 @@ namespace Golf_Capper.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult UpdateCourseHolePar(int id, [FromBody] CourseHolePar courseHolePar)
+        public async Task<IActionResult> UpdateCourseHoleParAsync(int id, [FromBody] CourseHolePar courseHolePar)
         {
             try
             {
-                CourseHolePar upDateCourseHolePar = _repository.UpdateCourseHolePar(id, courseHolePar);
+                CourseHolePar upDateCourseHolePar = await _repository.UpdateCourseHoleParAsync(id, courseHolePar);
                 if (upDateCourseHolePar == null)
                 {
                     return NotFound();
@@ -112,11 +112,11 @@ namespace Golf_Capper.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public ActionResult<CourseHolePar> DeleteCourseHolePar(int id)
+        public async Task<ActionResult<CourseHolePar>> DeleteCourseHoleParAsync(int id)
         {
             try
             {
-                bool deleteSuccesfull = _repository.DeleteCourseHolePar(id);
+                bool deleteSuccesfull = await _repository.DeleteCourseHoleParAsync(id);
                 if (!deleteSuccesfull)
                 {
                     return NotFound();

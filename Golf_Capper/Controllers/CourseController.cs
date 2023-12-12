@@ -95,7 +95,7 @@ namespace Golf_Capper.Controllers
         {
             try
             {
-                Course upDateCourse = await _repository.UpdateCourse(id, course);
+                Course upDateCourse = await _repository.UpdateCourseAsync(id, course);
                 if (upDateCourse == null)
                 {
                     return NotFound();
@@ -119,7 +119,7 @@ namespace Golf_Capper.Controllers
         {
             try
             {
-                bool deleteSuccesfull = await _repository.DeleteCourse(id);
+                bool deleteSuccesfull = await _repository.DeleteCourseAsync(id);
                 if (!deleteSuccesfull)
                 {
                     return NotFound();
