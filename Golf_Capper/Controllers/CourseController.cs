@@ -36,11 +36,11 @@ namespace Golf_Capper.Controllers
 
        [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Course>> GetCourseById(int id)
+        public async Task<ActionResult<Course>> GetCourseByIdAsync(int id)
         {
             try
             {
-                Course? c = await _repository.GetCourseById(id);
+                Course? c = await _repository.GetCourseByIdAsync(id);
                 if(c == null)
                 {
                     return NotFound();
@@ -71,7 +71,7 @@ namespace Golf_Capper.Controllers
                 {
                     await _repository.CreateCourseAsync(course);
 
-                    return CreatedAtAction(nameof(GetCourseById), new { id = course.CourseId }, course);
+                    return CreatedAtAction(nameof(GetCourseByIdAsync), new { id = course.CourseId }, course);
 
                 }
                 else

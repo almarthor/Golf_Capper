@@ -42,7 +42,7 @@ namespace Golf_Capper.Controllers
             try
             {
                 CourseHolePar? courseHolePar = await _repository.GetCourseHoleParByIdAsync(id);
-                if(courseHolePar != null)
+                if(courseHolePar == null)
                 {
                     return NotFound();
                 }
