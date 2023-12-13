@@ -16,12 +16,12 @@ namespace Golf_Capper.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<GamePlayed>> GetAllGamesPLayedAsync()
+        public async Task<ActionResult<List<GamePlayed>>> GetAllGamesPLayedAsync()
 
         {
             try
             {
-                List<GamePlayed> gamePlayeds =  _repository.GetAllGamesPLayedAsync();
+                List<GamePlayed> gamePlayeds =  await _repository.GetAllGamesPLayedAsync();
                 return Ok(gamePlayeds);
             }
             catch (Exception)
@@ -39,11 +39,11 @@ namespace Golf_Capper.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public ActionResult<GamePlayed> GetGamePlayedById(int id)
+        public async Task<ActionResult<GamePlayed>> GetGamePlayedByIdAsync(int id)
         {
             try
             {
-                GamePlayed? gamePlayed = _repository.GetGamePlayedById(id);
+                GamePlayed? gamePlayed = await _repository.GetGamePlayedByIdAsync(id);
                 if(gamePlayed == null)
                 {
                     return NotFound();
@@ -66,14 +66,14 @@ namespace Golf_Capper.Controllers
 
         }
         [HttpPost]
-        public IActionResult CreateGamePlayed([FromBody] GamePlayed gamePlayed)
+        public async Task<IActionResult> CreateGamePlayedAsync([FromBody] GamePlayed gamePlayed)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _repository.CreateGamePlayed(gamePlayed);
-                    return CreatedAtAction(nameof(GetGamePlayedById), new { id = gamePlayed.GamePlayedId }, gamePlayed);
+                    await _repository.CreateGamePlayedAsync(gamePlayed);
+                    return CreatedAtAction(nameof(GetGamePlayedByIdAsync), new { id = gamePlayed.GamePlayedId }, gamePlayed);
                 }
                 else
                 {
@@ -90,11 +90,11 @@ namespace Golf_Capper.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public ActionResult<GamePlayed> DeleteGamePlayed(int id)
+        public async Task<ActionResult<GamePlayed>> DeleteGamePlayedAsync(int id)
         {
             try
             {
-                bool deleteSuccesfull = _repository.DeleteGamePlayed(id);
+                bool deleteSuccesfull = await _repository.DeleteGamePlayedAsync(id);
                 if (!deleteSuccesfull)
                 {
                     return NotFound();

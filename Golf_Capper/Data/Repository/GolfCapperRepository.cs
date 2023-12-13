@@ -1,6 +1,5 @@
 ﻿using Golf_Capper.Data.Interface;
 using Golf_Capper.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Golf_Capper.Data.Repository
@@ -17,55 +16,55 @@ namespace Golf_Capper.Data.Repository
         //Create
         public async Task CreateCourseAsync(Course course)
         {
-            using(var db = _dbcontext) 
+            using (var db = _dbcontext)
             {
                 await db.Courses.AddAsync(course);
                 await db.SaveChangesAsync();
             }
         }
 
-        public async Task CreateCourseHoleParAsync (CourseHolePar courseHolePar)
+        public async Task CreateCourseHoleParAsync(CourseHolePar courseHolePar)
         {
-            using(var db = _dbcontext)
+            using (var db = _dbcontext)
             {
-                 await db.CourseHolePars.AddAsync(courseHolePar);
-                 await db.SaveChangesAsync();
+                await db.CourseHolePars.AddAsync(courseHolePar);
+                await db.SaveChangesAsync();
             }
         }
 
-        public void CreateGamePlayed(GamePlayed gamePlayed)
+        public async Task CreateGamePlayedAsync(GamePlayed gamePlayed)
         {
-            using(var db = _dbcontext)
+            using (var db = _dbcontext)
             {
-                db.GamesPlayed.Add(gamePlayed);
-                db.SaveChanges();
+                await db.GamesPlayed.AddAsync(gamePlayed);
+                await db.SaveChangesAsync();
             }
         }
 
-        public void CreateGolfer(Golfer golfer)
+        public async Task CreateGolferAsync(Golfer golfer)
         {
-            using(var db = _dbcontext) 
+            using (var db = _dbcontext)
             {
-                db.Golfers.Add(golfer);
-                db.SaveChanges();
+                await db.Golfers.AddAsync(golfer);
+                await db.SaveChangesAsync();
             }
         }
 
-        public void CreateLocation(Location location)
+        public async Task CreateLocationAsync(Location location)
         {
-            using(var db = _dbcontext)
+            using (var db = _dbcontext)
             {
-                db.Locations.Add(location);
-                db.SaveChanges();
+                await db.Locations.AddAsync(location);
+                await db.SaveChangesAsync();
             }
         }
 
-        public void CreateScore(Score score)
+        public async Task CreateScoreAsync(Score score)
         {
-            using(var db = _dbcontext)
+            using (var db = _dbcontext)
             {
-                db.Scores.Add(score);
-                db.SaveChanges();
+                await db.Scores.AddAsync(score);
+                await db.SaveChangesAsync();
             }
         }
 
@@ -73,11 +72,11 @@ namespace Golf_Capper.Data.Repository
         public async Task<bool> DeleteCourseAsync(int id)
         {
             Course courseToDelete;
-            using(var db = _dbcontext)
+            using (var db = _dbcontext)
             {
                 courseToDelete = await db.Courses.FirstOrDefaultAsync(c => c.CourseId == id);
 
-                if (courseToDelete == null) 
+                if (courseToDelete == null)
                 {
                     return false;
                 }
@@ -110,12 +109,12 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public bool DeleteGamePlayed(int id)
+        public async Task<bool> DeleteGamePlayedAsync(int id)
         {
             GamePlayed GamePlayedToDelete;
             using (var db = _dbcontext)
             {
-                GamePlayedToDelete = db.GamesPlayed.FirstOrDefault(g => g.GamePlayedId == id);
+                GamePlayedToDelete = await db.GamesPlayed.FirstOrDefaultAsync(g => g.GamePlayedId == id);
 
                 if (GamePlayedToDelete == null)
                 {
@@ -124,18 +123,18 @@ namespace Golf_Capper.Data.Repository
                 else
                 {
                     db.GamesPlayed.Remove(GamePlayedToDelete);
-                    db.SaveChanges(true);
+                    await db.SaveChangesAsync(true);
                     return true;
                 }
             }
         }
 
-        public bool DeleteGolfer(int id)
+        public async Task<bool> DeleteGolferAsync(int id)
         {
             Golfer GolferToDelete;
             using (var db = _dbcontext)
             {
-                GolferToDelete = db.Golfers.FirstOrDefault(g => g.GolferId == id);
+                GolferToDelete = await db.Golfers.FirstOrDefaultAsync(g => g.GolferId == id);
 
                 if (GolferToDelete == null)
                 {
@@ -144,18 +143,18 @@ namespace Golf_Capper.Data.Repository
                 else
                 {
                     db.Golfers.Remove(GolferToDelete);
-                    db.SaveChanges(true);
+                    await db.SaveChangesAsync(true);
                     return true;
                 }
             }
         }
 
-        public bool DeleteLocation(int id)
+        public async Task<bool> DeleteLocationAsync(int id)
         {
             Location LocationToDelete;
             using (var db = _dbcontext)
             {
-                LocationToDelete = db.Locations.FirstOrDefault(l => l.LocationId == id);
+                LocationToDelete = await db.Locations.FirstOrDefaultAsync(l => l.LocationId == id);
 
                 if (LocationToDelete == null)
                 {
@@ -164,18 +163,18 @@ namespace Golf_Capper.Data.Repository
                 else
                 {
                     db.Locations.Remove(LocationToDelete);
-                    db.SaveChanges(true);
+                    await db.SaveChangesAsync(true);
                     return true;
                 }
             }
         }
 
-        public bool DeleteScore(int id)
+        public async Task<bool> DeleteScoreAsync(int id)
         {
             Score ScoreToDelete;
             using (var db = _dbcontext)
             {
-                ScoreToDelete = db.Scores.FirstOrDefault(s => s.ScoreId == id);
+                ScoreToDelete = await db.Scores.FirstOrDefaultAsync(s => s.ScoreId == id);
 
                 if (ScoreToDelete == null)
                 {
@@ -184,7 +183,7 @@ namespace Golf_Capper.Data.Repository
                 else
                 {
                     db.Scores.Remove(ScoreToDelete);
-                    db.SaveChanges(true);
+                    await db.SaveChangesAsync(true);
                     return true;
                 }
             }
@@ -208,39 +207,39 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public List<GamePlayed> GetAllGamesPLayedAsync()
+        public async Task<List<GamePlayed>> GetAllGamesPLayedAsync()
         {
             using (var db = _dbcontext)
             {
-                return  db.GamesPlayed.ToList();
+                return await db.GamesPlayed.ToListAsync();
             }
         }
 
-        public   List<Golfer> GetAllGolfersAsync()
+        public async Task<List<Golfer>> GetAllGolfersAsync()
         {
             using (var db = _dbcontext)
             {
-                return  db.Golfers.ToList();
+                return await db.Golfers.ToListAsync();
             }
         }
 
-        public List<Location> GetAllLocationsAsync()
+        public async Task<List<Location>> GetAllLocationsAsync()
         {
-            
+
             using (var db = _dbcontext)
             {
-                return db.Locations.ToList();
+                return await db.Locations.ToListAsync();
             }
         }
 
-        public List<Score> GetAllScoresAsync()
+        public async Task<List<Score>> GetAllScoresAsync()
         {
-            
+
             using (var db = _dbcontext)
             {
-                return  db.Scores.ToList();
+                return await db.Scores.ToListAsync();
             }
-            
+
         }
 
         //GetById
@@ -250,9 +249,9 @@ namespace Golf_Capper.Data.Repository
             Course? c;
             using (var db = _dbcontext)
             {
-                
+
                 c = await db.Courses.Include(l => l.Location).FirstOrDefaultAsync(x => x.CourseId == id);
-                
+
                 return c;
             }
         }
@@ -267,44 +266,48 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public GamePlayed? GetGamePlayedById(int id)
+        public async Task<GamePlayed?> GetGamePlayedByIdAsync(int id)
         {
-            using(var db = _dbcontext)
+            GamePlayed? g;
+            using (var db = _dbcontext)
             {
-                GamePlayed? g = db.GamesPlayed
-                    .Include(z => z.Golfer)
-                    .Include(c => c.Course)
-                    .FirstOrDefault(x => x.GamePlayedId == id);
+                g = await db.GamesPlayed
+                   .Include(z => z.Golfer)
+                   .Include(c => c.Course)
+                   .FirstOrDefaultAsync(x => x.GamePlayedId == id);
                 return g;
             }
         }
 
-        public Golfer? GetGolferById(int id)
+        public async Task<Golfer?> GetGolferByIdAsync(int id)
         {
-            using(var db = _dbcontext)
+            Golfer? g;
+            using (var db = _dbcontext)
             {
-                Golfer? g = db.Golfers.FirstOrDefault(x => x.GolferId == id);
+                g = await db.Golfers.FirstOrDefaultAsync(x => x.GolferId == id);
                 return g;
             }
         }
 
-        public Location? GetLocationById(int id)
+        public async Task<Location?> GetLocationByIdAsync(int id)
         {
-            using(var db = _dbcontext)
+            Location? l;
+            using (var db = _dbcontext)
             {
-                Location? l = db.Locations.FirstOrDefault(x => x.LocationId == id);
+                l = await db.Locations.FirstOrDefaultAsync(x => x.LocationId == id);
                 return l;
             }
         }
 
-        public Score? GetScoreById(int id)
+        public async Task<Score?> GetScoreByIdAsync(int id)
         {
-            using(var db = _dbcontext)
+            Score? s;
+            using (var db = _dbcontext)
             {
-                Score? s = db.Scores
+                s = await db.Scores
                     .Include(z => z.GamePlayed.Golfer)
                     .Include(r => r.GamePlayed.Course)
-                    .FirstOrDefault(x => x.ScoreId == id);
+                    .FirstOrDefaultAsync(x => x.ScoreId == id);
                 return s;
             }
         }
@@ -314,11 +317,11 @@ namespace Golf_Capper.Data.Repository
         public async Task<Course> UpdateCourseAsync(int id, Course course)
         {
             Course CourseToUpdate;
-            using(var db = _dbcontext)
+            using (var db = _dbcontext)
             {
-                
+
                 CourseToUpdate = await db.Courses.FirstOrDefaultAsync(x => x.CourseId == id);
-                if(CourseToUpdate == null)
+                if (CourseToUpdate == null)
                 {
                     return null;
                 }
@@ -337,10 +340,10 @@ namespace Golf_Capper.Data.Repository
         public async Task<CourseHolePar> UpdateCourseHoleParAsync(int id, CourseHolePar courseHolePar)
         {
             CourseHolePar CourseHoleParToUpdate;
-            using(var db = _dbcontext)
+            using (var db = _dbcontext)
             {
                 CourseHoleParToUpdate = await db.CourseHolePars.FirstOrDefaultAsync(x => x.CourseHoleParId == id);
-                if(CourseHoleParToUpdate == null)
+                if (CourseHoleParToUpdate == null)
                 {
                     return null;
                 }
@@ -352,32 +355,32 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        
 
-        public Golfer UpdateGolfer(int id, Golfer golfer)
+
+        public async Task<Golfer> UpdateGolferAsync(int id, Golfer golfer)
         {
             Golfer GolferToUpdate;
-            using(var db = _dbcontext)
+            using (var db = _dbcontext)
             {
-                GolferToUpdate = db.Golfers.FirstOrDefault(x => x.GolferId == id);
-                if(GolferToUpdate == null)
+                GolferToUpdate = await db.Golfers.FirstOrDefaultAsync(x => x.GolferId == id);
+                if (GolferToUpdate == null)
                 {
                     return null;
                 }
                 GolferToUpdate.FirstName = golfer.FirstName;
                 GolferToUpdate.LastName = golfer.LastName;
                 GolferToUpdate.Handicap = golfer.Handicap;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return GolferToUpdate;
             }
         }
 
-        public Location UpdateLocation(int id, Location location)
+        public async Task<Location> UpdateLocationAsync(int id, Location location)
         {
             Location LocationToUpdate;
             using (var db = _dbcontext)
             {
-                LocationToUpdate = db.Locations.FirstOrDefault(x => x.LocationId == id);
+                LocationToUpdate = await db.Locations.FirstOrDefaultAsync(x => x.LocationId == id);
                 if (LocationToUpdate == null)
                 {
                     return null;
@@ -385,26 +388,26 @@ namespace Golf_Capper.Data.Repository
                 LocationToUpdate.City = location.City;
                 LocationToUpdate.Zip = location.Zip;
                 LocationToUpdate.Address = location.Address;
-                db.SaveChanges ();
+                await db.SaveChangesAsync();
                 return LocationToUpdate;
 
 
             }
         }
 
-        public Score UpdateScore(int id, Score score)
+        public async Task<Score> UpdateScoreAsync(int id, Score score)
         {
             Score ScoreToUpdate;
             using (var db = _dbcontext)
             {
-                ScoreToUpdate = db.Scores.FirstOrDefault(x => x.ScoreId == id);
+                ScoreToUpdate = await db.Scores.FirstOrDefaultAsync(x => x.ScoreId == id);
                 if (ScoreToUpdate == null)
                 {
                     return null;
                 }
                 ScoreToUpdate.Hole = score.Hole;
                 ScoreToUpdate.Strokes = score.Strokes;
-                db.SaveChanges () ;
+                await db.SaveChangesAsync();
                 return ScoreToUpdate;
 
 
@@ -413,6 +416,6 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-    } 
+    }
 
 }

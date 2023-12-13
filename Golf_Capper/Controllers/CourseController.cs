@@ -115,7 +115,7 @@ namespace Golf_Capper.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<ActionResult<Course>> DeleteCourse(int id)
+        public async Task<ActionResult<Course>> DeleteCourseAsync(int id)
         {
             try
             {

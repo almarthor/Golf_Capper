@@ -16,11 +16,11 @@ namespace Golf_Capper.Controllers
 
 
         [HttpGet]
-        public ActionResult<List<Golfer>> GetAllGolfersAsync()
+        public async Task<ActionResult<List<Golfer>>> GetAllGolfersAsync()
         {
             try
             {
-                List<Golfer> golfers =_repository.GetAllGolfersAsync();
+                List<Golfer> golfers = await _repository.GetAllGolfersAsync();
                 return Ok(golfers);
             }
             catch (Exception)
@@ -34,11 +34,11 @@ namespace Golf_Capper.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public ActionResult<Golfer> GetGolferById(int id)
+        public async Task<ActionResult<Golfer>> GetGolferById(int id)
         {
             try
             {
-                Golfer? golfer = _repository.GetGolferById(id);
+                Golfer? golfer = await _repository.GetGolferByIdAsync(id);
                 if(golfer == null)
                 {
                     return NotFound();
@@ -59,13 +59,13 @@ namespace Golf_Capper.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateGolfer([FromBody] Golfer golfer)
+        public async Task<IActionResult> CreateGolferAsync([FromBody] Golfer golfer)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _repository.CreateGolfer(golfer);
+                    await _repository.CreateGolferAsync(golfer);
                     return CreatedAtAction(nameof(GetGolferById), new { id = golfer.GolferId }, golfer);
                 }
                 else
@@ -84,18 +84,18 @@ namespace Golf_Capper.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult UpdateGolfer(int id, [FromBody] Golfer golfer)
+        public async Task<IActionResult> UpdateGolferAsync(int id, [FromBody] Golfer golfer)
         {
             try
             {
-                Golfer GolferToUpdate = _repository.UpdateGolfer(id, golfer);
+                Golfer GolferToUpdate = await _repository.UpdateGolferAsync(id, golfer);
                 if (GolferToUpdate == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(UpdateGolfer), new { id = golfer.GolferId }, golfer);
+                    return CreatedAtAction(nameof(UpdateGolferAsync), new { id = golfer.GolferId }, golfer);
                 }
             }
             catch (Exception)
@@ -109,11 +109,11 @@ namespace Golf_Capper.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public ActionResult<Golfer> DeleteGolfer(int id)
+        public async Task<ActionResult<Golfer>> DeleteGolferAsync(int id)
         {
             try
             {
-                bool deleteSuccesfull = _repository.DeleteGolfer(id);
+                bool deleteSuccesfull = await _repository.DeleteGolferAsync(id);
                 if (!deleteSuccesfull)
                 {
                     return NotFound();

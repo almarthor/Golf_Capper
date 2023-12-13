@@ -15,12 +15,12 @@ namespace Golf_Capper.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Location>> GetAllLocations()
+        public async Task<ActionResult<List<Location>>> GetAllLocationsAsync()
 
         {
             try
             {
-                List<Location> locations = _repository.GetAllLocationsAsync();
+                List<Location> locations = await _repository.GetAllLocationsAsync();
                 return Ok(locations);
             }
             catch (Exception)
@@ -34,11 +34,11 @@ namespace Golf_Capper.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public ActionResult<Location> GetLocationById(int id)
+        public async Task<ActionResult<Location>> GetLocationByIdAsync(int id)
         {
             try
             {
-                Location location = _repository.GetLocationById(id);
+                Location? location = await _repository.GetLocationByIdAsync(id);
                 if (location == null)
                 {
                     return NotFound();
@@ -59,14 +59,14 @@ namespace Golf_Capper.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateLocation([FromBody] Location location)
+        public async Task<IActionResult> CreateLocation([FromBody] Location location)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _repository.CreateLocation(location);
-                    return CreatedAtAction(nameof(GetLocationById), new { id = location.LocationId }, location);
+                    await _repository.CreateLocationAsync(location);
+                    return CreatedAtAction(nameof(GetLocationByIdAsync), new { id = location.LocationId }, location);
                 }
                 else
                 {
@@ -87,18 +87,18 @@ namespace Golf_Capper.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult UpdateLocation(int id, [FromBody] Location location)
+        public async Task<IActionResult> UpdateLocationAsync(int id, [FromBody] Location location)
         {
             try
             {
-                Location LocationToUpdate = _repository.UpdateLocation(id, location);
+                Location LocationToUpdate = await _repository.UpdateLocationAsync(id, location);
                 if (LocationToUpdate == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(UpdateLocation), new { id = location.LocationId }, location);
+                    return CreatedAtAction(nameof(UpdateLocationAsync), new { id = location.LocationId }, location);
                 }
             }
             catch (Exception)
@@ -112,11 +112,11 @@ namespace Golf_Capper.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public ActionResult<Location> DeleteLocation(int id)
+        public async Task<ActionResult<Location>> DeleteLocationAsync(int id)
         {
             try
             {
-                bool deleteSuccesfull = _repository.DeleteGolfer(id);
+                bool deleteSuccesfull = await _repository.DeleteLocationAsync(id);
                 if (!deleteSuccesfull)
                 {
                     return NotFound();

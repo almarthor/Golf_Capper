@@ -18,12 +18,12 @@ namespace Golf_Capper.Controllers
         }
 
         [HttpGet]
-        public  ActionResult<List<Score>> GetAllScoresAsync()
+        public async Task<ActionResult<List<Score>>> GetAllScoresAsync()
 
         {
             try
             {
-                List<Score> scores = _repository.GetAllScoresAsync();
+                List<Score> scores = await _repository.GetAllScoresAsync();
                 return Ok(scores);
             }
             catch (Exception)
@@ -37,13 +37,13 @@ namespace Golf_Capper.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public ActionResult<Score> GetScoreById(int id)
+        public async Task<ActionResult<Score>> GetScoreByIdAsync(int id)
         {
 
             try
             {
                 
-                Score score = _repository.GetScoreById(id);
+                Score score = await _repository.GetScoreByIdAsync(id);
                 if (score == null)
                 {
                     return NotFound();
@@ -65,15 +65,15 @@ namespace Golf_Capper.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateScore([FromBody] Score score)
+        public async Task<IActionResult> CreateScoreAsync([FromBody] Score score)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _repository.CreateScore(score);
+                    await _repository.CreateScoreAsync(score);
 
-                    return CreatedAtAction(nameof(GetScoreById), new { id = score.ScoreId }, score);
+                    return CreatedAtAction(nameof(GetScoreByIdAsync), new { id = score.ScoreId }, score);
                 }
                 else
                 {
@@ -91,11 +91,11 @@ namespace Golf_Capper.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult UpdateScore(int id, [FromBody] Score score)
+        public async Task<IActionResult> UpdateScore(int id, [FromBody] Score score)
         {
             try
             {
-                Score ScoreToUpdate = _repository.UpdateScore(id, score);
+                Score ScoreToUpdate = await _repository.UpdateScoreAsync(id, score);
                 if (ScoreToUpdate == null)
                 {
                     return NotFound();
@@ -114,11 +114,11 @@ namespace Golf_Capper.Controllers
         }
         [HttpDelete]
         [Route("{id}")]
-        public ActionResult<Score> DeleteScore(int id)
+        public async Task<ActionResult<Score>> DeleteScoreAsync(int id)
         {
             try
             {
-                bool deleteSuccesfull = _repository.DeleteScore(id);
+                bool deleteSuccesfull = await _repository.DeleteScoreAsync(id);
                 if (!deleteSuccesfull)
                 {
                     return NotFound();
