@@ -98,7 +98,7 @@ namespace Golf_Capper.Controllers
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(UpdateLocationAsync), new { id = location.LocationId }, location);
+                    return Ok(CreatedAtAction(nameof(UpdateLocationAsync), new { id = location.LocationId }, location));
                 }
             }
             catch (Exception)

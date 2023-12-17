@@ -95,7 +95,7 @@ namespace Golf_Capper.Controllers
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(UpdateGolferAsync), new { id = golfer.GolferId }, golfer);
+                    return Ok(CreatedAtAction(nameof(UpdateGolferAsync), new { id = golfer.GolferId }, golfer));
                 }
             }
             catch (Exception)

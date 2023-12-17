@@ -102,7 +102,7 @@ namespace Golf_Capper.Controllers
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(UpdateScore), new { id = score.ScoreId }, score);
+                    return Ok(CreatedAtAction(nameof(UpdateScore), new { id = score.ScoreId }, score));
                 }
             }
             catch (Exception)

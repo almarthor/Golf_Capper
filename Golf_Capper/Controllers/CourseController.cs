@@ -102,7 +102,7 @@ namespace Golf_Capper.Controllers
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(UpdateCourse), new { id = course.CourseId }, course);
+                    return Ok(CreatedAtAction(nameof(UpdateCourse), new { id = course.CourseId }, course));
                 }
             }
             catch (Exception)
