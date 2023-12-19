@@ -14,7 +14,7 @@ namespace Golf_Capper.Data.Repository
         }
 
         //Create
-        public async Task CreateCourseAsync(Course course)
+        public async Task CreateCourse(Course course)
         {
             using (var db = _dbcontext)
             {
@@ -23,7 +23,7 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public async Task CreateCourseHoleParAsync(CourseHolePar courseHolePar)
+        public async Task CreateCourseHolePar(CourseHolePar courseHolePar)
         {
             using (var db = _dbcontext)
             {
@@ -32,7 +32,7 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public async Task CreateGamePlayedAsync(GamePlayed gamePlayed)
+        public async Task CreateGamePlayed(GamePlayed gamePlayed)
         {
             using (var db = _dbcontext)
             {
@@ -41,7 +41,7 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public async Task CreateGolferAsync(Golfer golfer)
+        public async Task CreateGolfer(Golfer golfer)
         {
             using (var db = _dbcontext)
             {
@@ -50,7 +50,7 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public async Task CreateLocationAsync(Location location)
+        public async Task CreateLocation(Location location)
         {
             using (var db = _dbcontext)
             {
@@ -59,7 +59,7 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public async Task CreateScoreAsync(Score score)
+        public async Task CreateScore(Score score)
         {
             using (var db = _dbcontext)
             {
@@ -244,7 +244,7 @@ namespace Golf_Capper.Data.Repository
 
         //GetById
 
-        public async Task<Course?> GetCourseByIdAsync(int id)
+        public async Task<Course?> GetCourseById(int id)
         {
             Course? c;
             using (var db = _dbcontext)
@@ -256,7 +256,7 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public async Task<CourseHolePar?> GetCourseHoleParByIdAsync(int id)
+        public async Task<CourseHolePar?> GetCourseHoleParById(int id)
         {
             CourseHolePar? c;
             using (var db = _dbcontext)
@@ -266,7 +266,7 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public async Task<GamePlayed?> GetGamePlayedByIdAsync(int id)
+        public async Task<GamePlayed?> GetGamePlayedById(int id)
         {
             GamePlayed? g;
             using (var db = _dbcontext)
@@ -274,12 +274,13 @@ namespace Golf_Capper.Data.Repository
                 g = await db.GamesPlayed
                    .Include(z => z.Golfer)
                    .Include(c => c.Course)
+                   
                    .FirstOrDefaultAsync(x => x.GamePlayedId == id);
                 return g;
             }
         }
 
-        public async Task<Golfer?> GetGolferByIdAsync(int id)
+        public async Task<Golfer?> GetGolferById(int id)
         {
             Golfer? g;
             using (var db = _dbcontext)
@@ -289,7 +290,7 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public async Task<Location?> GetLocationByIdAsync(int id)
+        public async Task<Location?> GetLocationById(int id)
         {
             Location? l;
             using (var db = _dbcontext)
@@ -299,14 +300,14 @@ namespace Golf_Capper.Data.Repository
             }
         }
 
-        public async Task<Score?> GetScoreByIdAsync(int id)
+        public async Task<Score?> GetScoreById(int id)
         {
             Score? s;
             using (var db = _dbcontext)
             {
                 s = await db.Scores
-                    .Include(z => z.GamePlayed.Golfer)
-                    .Include(r => r.GamePlayed.Course)
+                    .Include(z => z.GamesPlayed)
+                    
                     .FirstOrDefaultAsync(x => x.ScoreId == id);
                 return s;
             }
@@ -407,6 +408,7 @@ namespace Golf_Capper.Data.Repository
                 }
                 ScoreToUpdate.Hole = score.Hole;
                 ScoreToUpdate.Strokes = score.Strokes;
+                ScoreToUpdate.GamePlayedId = score.GamePlayedId;
                 await db.SaveChangesAsync();
                 return ScoreToUpdate;
 

@@ -38,7 +38,7 @@ namespace Golf_Capper.Controllers
         {
             try
             {
-                Golfer? golfer = await _repository.GetGolferByIdAsync(id);
+                Golfer? golfer = await _repository.GetGolferById(id);
                 if(golfer == null)
                 {
                     return NotFound();
@@ -59,13 +59,14 @@ namespace Golf_Capper.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateGolferAsync([FromBody] Golfer golfer)
+        [ActionName("CreateGolfer")]
+        public async Task<IActionResult> CreateGolfer([FromBody] Golfer golfer)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    await _repository.CreateGolferAsync(golfer);
+                    await _repository.CreateGolfer(golfer);
                     return CreatedAtAction(nameof(GetGolferById), new { id = golfer.GolferId }, golfer);
                 }
                 else

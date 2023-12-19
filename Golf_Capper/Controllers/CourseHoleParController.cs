@@ -37,11 +37,11 @@ namespace Golf_Capper.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<CourseHolePar>> GetCourseHoleParByIdAsync(int id)
+        public async Task<ActionResult<CourseHolePar>> GetCourseHoleParById(int id)
         {
             try
             {
-                CourseHolePar? courseHolePar = await _repository.GetCourseHoleParByIdAsync(id);
+                CourseHolePar? courseHolePar = await _repository.GetCourseHoleParById(id);
                 if(courseHolePar == null)
                 {
                     return NotFound();
@@ -62,14 +62,15 @@ namespace Golf_Capper.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateCourseHoleParAsync([FromBody] CourseHolePar courseHolePar)
+        [ActionName("CreateCourseHolePar")]
+        public async Task<IActionResult> CreateCourseHolePar([FromBody] CourseHolePar courseHolePar)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    await _repository.CreateCourseHoleParAsync(courseHolePar);
-                    return CreatedAtAction(nameof(GetCourseHoleParByIdAsync), new { id = courseHolePar.CourseHoleParId }, courseHolePar);
+                    await _repository.CreateCourseHolePar(courseHolePar);
+                    return CreatedAtAction(nameof(GetCourseHoleParById), new { id = courseHolePar.CourseHoleParId }, courseHolePar);
                 }
                 else
                 {

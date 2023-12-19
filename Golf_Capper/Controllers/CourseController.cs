@@ -36,11 +36,11 @@ namespace Golf_Capper.Controllers
 
        [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Course>> GetCourseByIdAsync(int id)
+        public async Task<ActionResult<Course>> GetCourseById(int id)
         {
             try
             {
-                Course? c = await _repository.GetCourseByIdAsync(id);
+                Course? c = await _repository.GetCourseById(id);
                 if(c == null)
                 {
                     return NotFound();
@@ -63,15 +63,16 @@ namespace Golf_Capper.Controllers
 
 
         [HttpPost]
+        [ActionName("CreateCourse")]
         public async Task<IActionResult> CreateCourse([FromBody] Course course)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    await _repository.CreateCourseAsync(course);
+                    await _repository.CreateCourse(course);
 
-                    return CreatedAtAction(nameof(GetCourseByIdAsync), new { id = course.CourseId }, course);
+                    return CreatedAtAction(nameof(GetCourseById), new { id = course.CourseId }, course);
 
                 }
                 else
@@ -79,7 +80,7 @@ namespace Golf_Capper.Controllers
                     return BadRequest();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 

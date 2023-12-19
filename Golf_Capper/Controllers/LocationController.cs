@@ -34,11 +34,11 @@ namespace Golf_Capper.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Location>> GetLocationByIdAsync(int id)
+        public async Task<ActionResult<Location>> GetLocationById(int id)
         {
             try
             {
-                Location? location = await _repository.GetLocationByIdAsync(id);
+                Location? location = await _repository.GetLocationById(id);
                 if (location == null)
                 {
                     return NotFound();
@@ -59,14 +59,15 @@ namespace Golf_Capper.Controllers
 
 
         [HttpPost]
+        [ActionName("CreateLocation")]
         public async Task<IActionResult> CreateLocation([FromBody] Location location)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    await _repository.CreateLocationAsync(location);
-                    return CreatedAtAction(nameof(GetLocationByIdAsync), new { id = location.LocationId }, location);
+                    await _repository.CreateLocation(location);
+                    return CreatedAtAction(nameof(GetLocationById), new { id = location.LocationId }, location);
                 }
                 else
                 {

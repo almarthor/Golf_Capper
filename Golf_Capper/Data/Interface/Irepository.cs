@@ -12,19 +12,19 @@ namespace Golf_Capper.Data.Interface
         Task<List<Location>> GetAllLocationsAsync();
         Task<List<Score>> GetAllScoresAsync();
         // GetByID
-        Task<Course> GetCourseByIdAsync(int id);
-        Task<CourseHolePar> GetCourseHoleParByIdAsync(int id);
-        Task<GamePlayed> GetGamePlayedByIdAsync(int id);
-        Task<Golfer> GetGolferByIdAsync(int id);
-        Task<Location> GetLocationByIdAsync(int id);
-        Task<Score> GetScoreByIdAsync(int id);
+        Task<Course> GetCourseById(int id);
+        Task<CourseHolePar> GetCourseHoleParById(int id);
+        Task<GamePlayed> GetGamePlayedById(int id);
+        Task<Golfer> GetGolferById(int id);
+        Task<Location> GetLocationById(int id);
+        Task<Score> GetScoreById(int id);
         //Create
-        Task CreateCourseAsync(Course course);
-        Task CreateCourseHoleParAsync(CourseHolePar courseHolePar);
-        Task CreateGamePlayedAsync(GamePlayed gamePlayed);
-        Task CreateGolferAsync(Golfer golfer);
-        Task CreateLocationAsync(Location location);
-        Task CreateScoreAsync(Score score);
+        Task CreateCourse(Course course);
+        Task CreateCourseHolePar(CourseHolePar courseHolePar);
+        Task CreateGamePlayed(GamePlayed gamePlayed);
+        Task CreateGolfer(Golfer golfer);
+        Task CreateLocation(Location location);
+        Task CreateScore(Score score);
         //update
         Task<Course> UpdateCourseAsync(int id, Course course);
         Task<CourseHolePar> UpdateCourseHoleParAsync(int id, CourseHolePar courseHolePar);

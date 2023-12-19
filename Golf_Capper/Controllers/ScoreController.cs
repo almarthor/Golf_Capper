@@ -37,13 +37,13 @@ namespace Golf_Capper.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Score>> GetScoreByIdAsync(int id)
+        public async Task<ActionResult<Score>> GetScoreById(int id)
         {
 
             try
             {
                 
-                Score score = await _repository.GetScoreByIdAsync(id);
+                Score score = await _repository.GetScoreById(id);
                 if (score == null)
                 {
                     return NotFound();
@@ -65,15 +65,16 @@ namespace Golf_Capper.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateScoreAsync([FromBody] Score score)
+        [ActionName("CreateScore")]
+        public async Task<IActionResult> CreateScore([FromBody] Score score)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    await _repository.CreateScoreAsync(score);
+                    await _repository.CreateScore(score);
 
-                    return CreatedAtAction(nameof(GetScoreByIdAsync), new { id = score.ScoreId }, score);
+                    return CreatedAtAction(nameof(GetScoreById), new { id = score.ScoreId }, score);
                 }
                 else
                 {

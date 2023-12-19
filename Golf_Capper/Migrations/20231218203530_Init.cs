@@ -50,17 +50,16 @@ namespace Golf_Capper.Migrations
                     CourseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CoursePar = table.Column<int>(type: "int", nullable: false),
                     NumberOfHoles = table.Column<int>(type: "int", nullable: false),
-                    LocationId = table.Column<int>(type: "int", nullable: false)
+                    LocationID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.CourseId);
                     table.ForeignKey(
-                        name: "FK_Courses_Locations_LocationId",
-                        column: x => x.LocationId,
+                        name: "FK_Courses_Locations_LocationID",
+                        column: x => x.LocationID,
                         principalTable: "Locations",
-                        principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "LocationId");
                 });
 
             migrationBuilder.CreateTable(
@@ -71,7 +70,7 @@ namespace Golf_Capper.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     HoleNumber = table.Column<int>(type: "int", nullable: false),
                     Par = table.Column<int>(type: "int", nullable: false),
-                    CourseId = table.Column<int>(type: "int", nullable: false)
+                    CourseId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -80,8 +79,7 @@ namespace Golf_Capper.Migrations
                         name: "FK_CourseHolePars_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
-                        principalColumn: "CourseId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CourseId");
                 });
 
             migrationBuilder.CreateTable(
@@ -91,8 +89,8 @@ namespace Golf_Capper.Migrations
                     GamePlayedId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LoadedFromDatabase = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    GolferId = table.Column<int>(type: "int", nullable: false),
-                    CourseId = table.Column<int>(type: "int", nullable: false)
+                    GolferId = table.Column<int>(type: "int", nullable: true),
+                    CourseId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -101,14 +99,12 @@ namespace Golf_Capper.Migrations
                         name: "FK_GamesPlayed_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
-                        principalColumn: "CourseId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CourseId");
                     table.ForeignKey(
                         name: "FK_GamesPlayed_Golfers_GolferId",
                         column: x => x.GolferId,
                         principalTable: "Golfers",
-                        principalColumn: "GolferId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "GolferId");
                 });
 
             migrationBuilder.CreateTable(
@@ -119,7 +115,7 @@ namespace Golf_Capper.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Hole = table.Column<int>(type: "int", nullable: false),
                     Strokes = table.Column<int>(type: "int", nullable: false),
-                    GamePlayedId = table.Column<int>(type: "int", nullable: false)
+                    GamePlayedId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -128,8 +124,7 @@ namespace Golf_Capper.Migrations
                         name: "FK_Scores_GamesPlayed_GamePlayedId",
                         column: x => x.GamePlayedId,
                         principalTable: "GamesPlayed",
-                        principalColumn: "GamePlayedId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "GamePlayedId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -138,9 +133,9 @@ namespace Golf_Capper.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_LocationId",
+                name: "IX_Courses_LocationID",
                 table: "Courses",
-                column: "LocationId");
+                column: "LocationID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GamesPlayed_CourseId",

@@ -39,11 +39,11 @@ namespace Golf_Capper.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<GamePlayed>> GetGamePlayedByIdAsync(int id)
+        public async Task<ActionResult<GamePlayed>> GetGamePlayedById(int id)
         {
             try
             {
-                GamePlayed? gamePlayed = await _repository.GetGamePlayedByIdAsync(id);
+                GamePlayed? gamePlayed = await _repository.GetGamePlayedById(id);
                 if(gamePlayed == null)
                 {
                     return NotFound();
@@ -66,14 +66,15 @@ namespace Golf_Capper.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> CreateGamePlayedAsync([FromBody] GamePlayed gamePlayed)
+        [ActionName("CreateGamePlayed")]
+        public async Task<IActionResult> CreateGamePlayed([FromBody] GamePlayed gamePlayed)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    await _repository.CreateGamePlayedAsync(gamePlayed);
-                    return CreatedAtAction(nameof(GetGamePlayedByIdAsync), new { id = gamePlayed.GamePlayedId }, gamePlayed);
+                    await _repository.CreateGamePlayed(gamePlayed);
+                    return CreatedAtAction(nameof(GetGamePlayedById), new { id = gamePlayed.GamePlayedId }, gamePlayed);
                 }
                 else
                 {

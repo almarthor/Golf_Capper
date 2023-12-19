@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Golf_Capper.Migrations
 {
     [DbContext(typeof(GolfCapperDbcontext))]
-    [Migration("20231204111456_Init")]
+    [Migration("20231218203530_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -40,7 +40,7 @@ namespace Golf_Capper.Migrations
                     b.Property<int>("CoursePar")
                         .HasColumnType("int");
 
-                    b.Property<int>("LocationId")
+                    b.Property<int?>("LocationID")
                         .HasColumnType("int");
 
                     b.Property<int>("NumberOfHoles")
@@ -48,7 +48,7 @@ namespace Golf_Capper.Migrations
 
                     b.HasKey("CourseId");
 
-                    b.HasIndex("LocationId");
+                    b.HasIndex("LocationID");
 
                     b.ToTable("Courses");
                 });
@@ -61,7 +61,7 @@ namespace Golf_Capper.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseHoleParId"));
 
-                    b.Property<int>("CourseId")
+                    b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<int>("HoleNumber")
@@ -85,10 +85,10 @@ namespace Golf_Capper.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GamePlayedId"));
 
-                    b.Property<int>("CourseId")
+                    b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GolferId")
+                    b.Property<int?>("GolferId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LoadedFromDatabase")
@@ -159,7 +159,7 @@ namespace Golf_Capper.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ScoreId"));
 
-                    b.Property<int>("GamePlayedId")
+                    b.Property<int?>("GamePlayedId")
                         .HasColumnType("int");
 
                     b.Property<int>("Hole")
@@ -179,9 +179,7 @@ namespace Golf_Capper.Migrations
                 {
                     b.HasOne("Golf_Capper.Models.Location", "Location")
                         .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationID");
 
                     b.Navigation("Location");
                 });
@@ -190,9 +188,7 @@ namespace Golf_Capper.Migrations
                 {
                     b.HasOne("Golf_Capper.Models.Course", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CourseId");
 
                     b.Navigation("Course");
                 });
@@ -201,15 +197,11 @@ namespace Golf_Capper.Migrations
                 {
                     b.HasOne("Golf_Capper.Models.Course", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CourseId");
 
                     b.HasOne("Golf_Capper.Models.Golfer", "Golfer")
                         .WithMany()
-                        .HasForeignKey("GolferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GolferId");
 
                     b.Navigation("Course");
 
@@ -218,13 +210,11 @@ namespace Golf_Capper.Migrations
 
             modelBuilder.Entity("Golf_Capper.Models.Score", b =>
                 {
-                    b.HasOne("Golf_Capper.Models.GamePlayed", "GamePlayed")
+                    b.HasOne("Golf_Capper.Models.GamePlayed", "GamesPlayed")
                         .WithMany()
-                        .HasForeignKey("GamePlayedId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GamePlayedId");
 
-                    b.Navigation("GamePlayed");
+                    b.Navigation("GamesPlayed");
                 });
 #pragma warning restore 612, 618
         }

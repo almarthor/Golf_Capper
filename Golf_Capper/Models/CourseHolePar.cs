@@ -4,6 +4,7 @@ namespace Golf_Capper.Models
 {
     public class CourseHolePar
     {
+       
         
         [Key]
         public int CourseHoleParId { get; set; }
@@ -11,8 +12,8 @@ namespace Golf_Capper.Models
         public int Par {  get; set; }
 
         //navi
-        public int CourseId { get; set; }
-        public Course Course { get; set; } = null!;
 
+        public int? CourseId { get; set; }
+        public Course Course { get; set; }
     }
 }
