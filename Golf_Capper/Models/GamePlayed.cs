@@ -13,9 +13,9 @@ namespace Golf_Capper.Models
         //navi
 
         public int? GolferId { get; set; }
-        public Golfer Golfer { get; set; }
+        public Golfer? Golfer { get; set; }
         public int? CourseId { get; set; }
-        public Course Course { get; set; }
+        public Course? Course { get; set; }
 
 
 

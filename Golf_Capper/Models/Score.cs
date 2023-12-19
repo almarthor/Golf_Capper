@@ -14,7 +14,7 @@ namespace Golf_Capper.Models
         //navi
 
         public int? GamePlayedId { get; set; }
-        public GamePlayed GamesPlayed { get; set; }
+        public GamePlayed? GamesPlayed { get; set; }
 
 
     }
