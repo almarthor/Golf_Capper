@@ -26,7 +26,7 @@ namespace Golf_Capper.Controllers
 
                 return Ok(courses);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
@@ -52,7 +52,7 @@ namespace Golf_Capper.Controllers
                 }
                 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
@@ -77,7 +77,7 @@ namespace Golf_Capper.Controllers
                     return BadRequest();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
             }
@@ -102,7 +102,7 @@ namespace Golf_Capper.Controllers
                     return CreatedAtAction(nameof(upDateCourseHolePar), new { id = courseHolePar.CourseHoleParId }, courseHolePar);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
@@ -127,7 +127,7 @@ namespace Golf_Capper.Controllers
                     return NoContent();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 

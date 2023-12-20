@@ -8,7 +8,8 @@ namespace Golf_Capper.Models
 
         [Key]
         public int CourseId { get; set; }
-        
+
+        [MaxLength(255)]
         public string CourseName { get; set; }
         
         public int CoursePar {  get; set; }

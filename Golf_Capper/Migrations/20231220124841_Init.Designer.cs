@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Golf_Capper.Migrations
 {
     [DbContext(typeof(GolfCapperDbcontext))]
-    [Migration("20231218203530_Init")]
+    [Migration("20231220124841_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -35,12 +35,13 @@ namespace Golf_Capper.Migrations
 
                     b.Property<string>("CourseName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("CoursePar")
                         .HasColumnType("int");
 
-                    b.Property<int?>("LocationID")
+                    b.Property<int?>("LocationId")
                         .HasColumnType("int");
 
                     b.Property<int>("NumberOfHoles")
@@ -48,7 +49,7 @@ namespace Golf_Capper.Migrations
 
                     b.HasKey("CourseId");
 
-                    b.HasIndex("LocationID");
+                    b.HasIndex("LocationId");
 
                     b.ToTable("Courses");
                 });
@@ -179,7 +180,7 @@ namespace Golf_Capper.Migrations
                 {
                     b.HasOne("Golf_Capper.Models.Location", "Location")
                         .WithMany()
-                        .HasForeignKey("LocationID");
+                        .HasForeignKey("LocationId");
 
                     b.Navigation("Location");
                 });

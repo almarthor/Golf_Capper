@@ -23,7 +23,7 @@ namespace Golf_Capper.Controllers
                 List<Golfer> golfers = await _repository.GetAllGolfersAsync();
                 return Ok(golfers);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
@@ -49,7 +49,7 @@ namespace Golf_Capper.Controllers
                 }
                 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
@@ -74,7 +74,7 @@ namespace Golf_Capper.Controllers
                     return BadRequest();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
@@ -99,7 +99,7 @@ namespace Golf_Capper.Controllers
                     return CreatedAtAction(nameof(UpdateGolferAsync), new { id = golfer.GolferId }, golfer);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
@@ -124,7 +124,7 @@ namespace Golf_Capper.Controllers
                     return NoContent();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 

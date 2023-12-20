@@ -24,7 +24,7 @@ namespace Golf_Capper.Controllers
                 List<GamePlayed> gamePlayeds =  await _repository.GetAllGamesPLayedAsync();
                 return Ok(gamePlayeds);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
@@ -54,7 +54,7 @@ namespace Golf_Capper.Controllers
                 }
                 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
@@ -81,7 +81,7 @@ namespace Golf_Capper.Controllers
                     return BadRequest();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
@@ -105,7 +105,7 @@ namespace Golf_Capper.Controllers
                     return NoContent();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 

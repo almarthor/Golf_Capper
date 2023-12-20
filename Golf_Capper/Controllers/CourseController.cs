@@ -1,6 +1,5 @@
 ﻿using Golf_Capper.Data.Interface;
 using Golf_Capper.Models;
-//using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Golf_Capper.Controllers
@@ -17,31 +16,31 @@ namespace Golf_Capper.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult <List<Course>>> GetAllCoursesAsync()
+        public async Task<ActionResult<List<Course>>> GetAllCoursesAsync()
         {
             try
             {
-                List<Course> courses =  await _repository.GetAllCoursesAsync();
+                List<Course> courses = await _repository.GetAllCoursesAsync();
 
                 return Ok(courses);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
             }
-            
+
         }
 
 
-       [HttpGet]
+        [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult<Course>> GetCourseById(int id)
         {
             try
             {
                 Course? c = await _repository.GetCourseById(id);
-                if(c == null)
+                if (c == null)
                 {
                     return NotFound();
                 }
@@ -49,15 +48,15 @@ namespace Golf_Capper.Controllers
                 {
                     return Ok(c);
                 }
-                
+
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
             }
 
-            
+
         }
 
 
@@ -85,8 +84,7 @@ namespace Golf_Capper.Controllers
                 return StatusCode(500);
 
             }
-            
-        }//asdf
+        }
 
 
 
@@ -96,22 +94,20 @@ namespace Golf_Capper.Controllers
         {
             try
             {
-                Course upDateCourse = await _repository.UpdateCourseAsync(id, course);
-                if (upDateCourse == null)
+                Course UpdatedCourse = await _repository.UpdateCourseAsync(id, course);
+                if (UpdatedCourse == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(UpdateCourse), new { id = course.CourseId }, course);
+                    return Ok(UpdateCourse);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
-
             }
-            
         }
 
         [HttpDelete]
@@ -130,15 +126,12 @@ namespace Golf_Capper.Controllers
                     return NoContent();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
             }
-            
-
         }
-       
     }
 }
 

@@ -47,17 +47,17 @@ namespace Golf_Capper.Migrations
                 {
                     CourseId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CourseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CourseName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     CoursePar = table.Column<int>(type: "int", nullable: false),
                     NumberOfHoles = table.Column<int>(type: "int", nullable: false),
-                    LocationID = table.Column<int>(type: "int", nullable: true)
+                    LocationId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.CourseId);
                     table.ForeignKey(
-                        name: "FK_Courses_Locations_LocationID",
-                        column: x => x.LocationID,
+                        name: "FK_Courses_Locations_LocationId",
+                        column: x => x.LocationId,
                         principalTable: "Locations",
                         principalColumn: "LocationId");
                 });
@@ -133,9 +133,9 @@ namespace Golf_Capper.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_LocationID",
+                name: "IX_Courses_LocationId",
                 table: "Courses",
-                column: "LocationID");
+                column: "LocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GamesPlayed_CourseId",

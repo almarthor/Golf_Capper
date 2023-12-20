@@ -7,8 +7,10 @@ namespace Golf_Capper.Models
        
         [Key]
         public int LocationId { get; set; }
+        [MaxLength(255)]
         public string City { get; set; }
         public int Zip {  get; set; }
+        [MaxLength(255)]
         public string Address { get; set; }
 
         

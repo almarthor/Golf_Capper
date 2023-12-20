@@ -1,12 +1,15 @@
 ﻿using Golf_Capper.Data.Interface;
 using Golf_Capper.Models;
 using Microsoft.EntityFrameworkCore;
+using Golf_Capper.Data;
 
 namespace Golf_Capper.Data.Repository
 {
     public class GolfCapperRepository : Irepository
     {
         private readonly GolfCapperDbcontext _dbcontext;
+
+        
 
         public GolfCapperRepository()
         {
@@ -249,9 +252,7 @@ namespace Golf_Capper.Data.Repository
             Course? c;
             using (var db = _dbcontext)
             {
-
                 c = await db.Courses.Include(l => l.Location).FirstOrDefaultAsync(x => x.CourseId == id);
-
                 return c;
             }
         }
@@ -271,11 +272,9 @@ namespace Golf_Capper.Data.Repository
             GamePlayed? g;
             using (var db = _dbcontext)
             {
-                g = await db.GamesPlayed
-                   .Include(z => z.Golfer)
-                   .Include(c => c.Course)
-                   
-                   .FirstOrDefaultAsync(x => x.GamePlayedId == id);
+                g = await db.GamesPlayed.Include(z => z.Golfer)
+                                        .Include(c => c.Course)
+                                        .FirstOrDefaultAsync(x => x.GamePlayedId == id);
                 return g;
             }
         }
@@ -317,24 +316,19 @@ namespace Golf_Capper.Data.Repository
 
         public async Task<Course> UpdateCourseAsync(int id, Course course)
         {
-            Course CourseToUpdate;
+            Course UpdatedCourse;
             using (var db = _dbcontext)
             {
-
-                CourseToUpdate = await db.Courses.FirstOrDefaultAsync(x => x.CourseId == id);
-                if (CourseToUpdate == null)
+                UpdatedCourse = await db.Courses.FirstOrDefaultAsync(x => x.CourseId == id);
+                if (UpdatedCourse == null)
                 {
                     return null;
                 }
-                CourseToUpdate.CoursePar = course.CoursePar;
-                CourseToUpdate.CourseName = course.CourseName;
-                CourseToUpdate.NumberOfHoles = course.NumberOfHoles;
+                UpdatedCourse.CoursePar = course.CoursePar;
+                UpdatedCourse.CourseName = course.CourseName;
+                UpdatedCourse.NumberOfHoles = course.NumberOfHoles;
                 await db.SaveChangesAsync();
-                return CourseToUpdate;
-
-
-
-
+                return UpdatedCourse;
             }
         }
 

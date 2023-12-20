@@ -26,14 +26,14 @@ namespace Golf_Capper.Controllers
                 List<Score> scores = await _repository.GetAllScoresAsync();
                 return Ok(scores);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
             }
-            
+
         }
-        
+
 
         [HttpGet]
         [Route("{id}")]
@@ -42,7 +42,7 @@ namespace Golf_Capper.Controllers
 
             try
             {
-                
+
                 Score score = await _repository.GetScoreById(id);
                 if (score == null)
                 {
@@ -51,17 +51,17 @@ namespace Golf_Capper.Controllers
                 }
                 else
                 {
-                return Ok(score);
+                    return Ok(score);
                 }
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
             }
-            
+
         }
 
         [HttpPost]
@@ -81,13 +81,13 @@ namespace Golf_Capper.Controllers
                     return BadRequest();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
             }
-            
-            
+
+
         }
 
         [HttpPut]
@@ -106,12 +106,12 @@ namespace Golf_Capper.Controllers
                     return CreatedAtAction(nameof(UpdateScore), new { id = score.ScoreId }, score);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
             }
-            
+
         }
         [HttpDelete]
         [Route("{id}")]
@@ -129,15 +129,15 @@ namespace Golf_Capper.Controllers
                     return NoContent();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
             }
 
-            
+
 
         }
-        
+
     }
 }

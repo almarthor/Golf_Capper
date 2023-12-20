@@ -23,7 +23,7 @@ namespace Golf_Capper.Controllers
                 List<Location> locations = await _repository.GetAllLocationsAsync();
                 return Ok(locations);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
@@ -49,7 +49,7 @@ namespace Golf_Capper.Controllers
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
@@ -102,7 +102,7 @@ namespace Golf_Capper.Controllers
                     return CreatedAtAction(nameof(UpdateLocationAsync), new { id = location.LocationId }, location);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
@@ -127,7 +127,7 @@ namespace Golf_Capper.Controllers
                     return NoContent();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(500);
 
